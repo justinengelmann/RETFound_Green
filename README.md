@@ -1,19 +1,20 @@
 # RETFound-Green - a high performance retinal image foundation model trained with half-the-data and 400 times less compute
 
-🚧 **Under construction:** At present, this repo contains the RETFound-Green model weights and basic instructions for usage. We're currently cleaning up and documenting the code for training and evaluation. Email us if you encounter any issues or would like a preview version.
+🚧 **This repo:** This repo contains the RETFound-Green model weights and basic instructions for usage, as well as the code for training and evaluating the model.
+
+***If you just want to use the model, you do not need to clone this repo. Just download the weights and use the minimal snippets below in your project.***
 
 ## Basic useage
-To load RETFound-Green, you need to install a recent version of pytorch (we used 2.2) and timm (we used 0.9.12), and download the model weights shared as "release" on this GitHub repo (sidebar on the right, or click this [link](https://github.com/justinengelmann/RETFound_Green/releases/tag/v0.1)).
+To load RETFound-Green, you need to install a recent version of pytorch (we used 2.2) and timm (we used 0.9.12), and download the model weights shared as "release" on this GitHub repo (sidebar on the right, or simply run ```!wget https://github.com/justinengelmann/RETFound_Green/releases/download/v0.1/retfoundgreen_statedict.pth```).
 
 You can then simply load the model like this:
 ```python
 import timm
-import torch
 
 rfg = timm.create_model('vit_small_patch14_reg4_dinov2',
-                        img_size=(392, 392), num_classes=0).eval()
-rfg_weights = torch.load('retfoundgreen_statedict.pth')
-rfg.load_state_dict(rfg_weights)
+                        img_size=(392, 392), num_classes=0,
+                        checkpoint_path='retfoundgreen_statedict.pth').eval()
+rfg.global_pool = 'avg'
 ```
 
 No additional custom code is needed. You do not need to clone this GitHub repo to use RETFound-Green.
